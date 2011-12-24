@@ -17,8 +17,7 @@ class Tools:
     def register_tool(self, tool):
         """ add a new tool
         """
-        self.tools.append(tool)
-        self.add_tool(tool)
+        self._add_tool(tool)
 
     def analyse(self):
         """ analyse source code
