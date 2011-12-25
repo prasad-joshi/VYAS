@@ -6,7 +6,7 @@ from valgrind import *
 
 from CTool import *
 
-tools = [CppCheck("test.c"), splint(), valgrind()]
+tools = [CppCheck("CPrograms/test.c"), splint(), valgrind()]
 
 b = CTool()
 
