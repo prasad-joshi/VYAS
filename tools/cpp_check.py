@@ -2,6 +2,8 @@
 
 import commands
 import log
+import ToolError
+from Error import *
 
 import pprint
 from xml.etree.ElementTree import parse
@@ -56,6 +58,7 @@ class CppCheck(object):
         """ initialization
         """
         self.file_name = file_name      # source file to analyse
+        self.errors    = []
 
         if not self.CPPCHECK_PATH:
             self.__cpp_check_path__()
@@ -92,6 +95,11 @@ class CppCheck(object):
         default_args = " --enable=style "
         return self._run_command(self.CPPCHECK_PATH + default_args + args)
 
+    def add_error(self, error):
+        """
+        """
+        self.errors.append(error)
+
     def analyse(self):
         """ analyse source code using cppcheck
         """
@@ -102,7 +110,20 @@ class CppCheck(object):
         r, o = self.run_cpp_check(args)
         log.log(3, o)
 
-        x = CppCheckXMLParser(xml)
-        errors = x.parse()
+        x       = CppCheckXMLParser(xml)
+        errors  = x.parse()
+        for en in errors:
+            f = errors[en]["file"]
+            l = errors[en]["line"]
+            c = 0                   # cppcheck does not report column number
+            te = errors[en]["msg"]
+            id = errors[en]["id"]
 
-        pprint.pprint(errors)
+            e = ToolError.cppcheck_error(id, l, c, f, te)   # get error object
+
+            self.add_error(e)
+
+        for e in self.errors:
+            print e
+
+        # pprint.pprint(errors)
