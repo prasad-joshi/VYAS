@@ -75,14 +75,6 @@ class CppCheck(object):
         else:
             log.log(3, CPPCHECK_NAME + " is not installed.")
 
-    def is_installed(self):
-        """ check if cppcheck tool is installed
-        """
-        r = self.__cpp_check_path__()
-        if r == 0:
-            return 0
-        return 1
-
     def run_cpp_check(self, args):
         """ run cppcheck
         """
