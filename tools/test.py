@@ -8,7 +8,8 @@ from valgrind import *
 
 from CTool import *
 
-tools = [CppCheck("CPrograms/test.c"), splint(), valgrind()]
+test_file = "CPrograms/test.c"
+tools = [CppCheck(test_file), splint(test_file), valgrind()]
 
 b = CTool()
 
