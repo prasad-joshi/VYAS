@@ -5,6 +5,8 @@ import log
 import ToolError
 from Error import *
 
+import utils
+
 import pprint
 from xml.etree.ElementTree import parse
 
@@ -52,7 +54,7 @@ class CppCheckXMLParser(object):
 class CppCheck(object):
 
     CPPCHECK_PATH = None
-    WHICH = "/usr/bin/which"
+    CPPCHECK_NAME = "cppcheck"
 
     def __init__(self, file_name):
         """ initialization
@@ -64,20 +66,14 @@ class CppCheck(object):
             self.__cpp_check_path__()
         pass
 
-    def _run_command(self, cmd):
-        """ run a command
-        """
-        log.log(3, cmd)
-        return commands.getstatusoutput(cmd)
-
     def __cpp_check_path__(self):
         """ find cppcheck path
         """
-        r, o = self._run_command(self.WHICH + " cppcheck")
-        if r != 0:
-            assert(0)
-        self.CPPCHECK_PATH = o
-        return r
+        p = utils.get_installed_path(self.CPPCHECK_NAME)
+        if p:
+            self.CPPCHECK_PATH = p
+        else:
+            log.log(3, CPPCHECK_NAME + " is not installed.")
 
     def is_installed(self):
         """ check if cppcheck tool is installed
@@ -93,7 +89,7 @@ class CppCheck(object):
         # for now let's assume --enable=style argument, we might decide to
         # change it latter on
         default_args = " --enable=style "
-        return self._run_command(self.CPPCHECK_PATH + default_args + args)
+        return utils.run_log_command(self.CPPCHECK_PATH + default_args + args)
 
     def add_error(self, error):
         """

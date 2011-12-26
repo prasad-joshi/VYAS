@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+import sys
+sys.path.append("lib/")
 from cpp_check import *
 from splint import *
 from valgrind import *
