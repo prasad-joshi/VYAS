@@ -19,23 +19,25 @@ class splint(object):
         self.errors    = []
         self.output    = "/tmp/splint_out"
 
-        if not self.SPLINT_PATH:
+        if not splint.SPLINT_PATH:
             self.__splint_path__()
         pass
 
     def __splint_path__(self):
         """ find cppcheck path
         """
-        p = utils.get_installed_path(self.SPLINT_NAME)
+        p = utils.get_installed_path(splint.SPLINT_NAME)
         if p:
-            self.SPLINT_PATH = p
+            splint.SPLINT_PATH = p
         else:
-            log.log(3, self.SPLINT_NAME + " is not installed.")
+            log.log(3, splint.SPLINT_NAME + " is not installed.")
 
     def run_splint(self, args):
         """ invoke splint on the source code
         """
-        return utils.run_log_command(self.SPLINT_PATH + " " + args)
+        print splint.SPLINT_PATH
+        print args
+        return utils.run_log_command(splint.SPLINT_PATH + " " + args)
 
     def add_error(self, error):
         """ append an error in list of errors
@@ -44,7 +46,7 @@ class splint(object):
 
     def parse(self):
         """ parse the output of splint.
-        
+
         Format of splint output is:
             [<file>:<line> (in <context>)]
             <file>:<line>[,<column>]: message
