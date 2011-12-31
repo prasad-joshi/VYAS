@@ -9,7 +9,7 @@ from valgrind import *
 from CTool import *
 
 test_file = "CPrograms/test.c"
-exe = "CPrograms/a.out"
+exe = "CPrograms/link-list"
 tools = [CppCheck(test_file), splint(test_file), valgrind(exe)]
 
 b = CTool()
