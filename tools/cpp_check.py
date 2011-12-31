@@ -81,7 +81,7 @@ class CppCheck(object):
         # for now let's assume --enable=style argument, we might decide to
         # change it latter on
         default_args = " --enable=style "
-        return utils.run_log_command(self.CPPCHECK_PATH + default_args + args)
+        return utils.run_command(self.CPPCHECK_PATH + default_args + args)
 
     def add_error(self, error):
         """
@@ -94,10 +94,8 @@ class CppCheck(object):
         xml = "/tmp/output.xml"
         args = " --xml " + self.file_name + " 2> " + xml
 
-        log.log(3, "analysing cpp code using cppcheck")
-        r, o = self.run_cpp_check(args)
-        log.log(3, o)
-
+        log.log(3, "\nAnalysing cpp code using cppcheck\n")
+        r, o    = self.run_cpp_check(args)
         x       = CppCheckXMLParser(xml)
         errors  = x.parse()
         for en in errors:
