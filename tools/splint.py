@@ -35,9 +35,7 @@ class splint(object):
     def run_splint(self, args):
         """ invoke splint on the source code
         """
-        print splint.SPLINT_PATH
-        print args
-        return utils.run_log_command(splint.SPLINT_PATH + " " + args)
+        return utils.run_command(splint.SPLINT_PATH + " " + args)
 
     def add_error(self, error):
         """ append an error in list of errors
@@ -98,7 +96,7 @@ class splint(object):
         """
         args = "{sf} >{of} 2>/dev/null".format(sf=self.file_name, of=self.output)
 
-        log.log(3, "analysing cpp code using splint")
+        log.log(3, "\nAnalysing cpp code using splint\n")
         r, o = self.run_splint(args)
 
         self.parse()
