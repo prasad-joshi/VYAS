@@ -9,13 +9,15 @@ class Error(object):
         self.tool_error = tool_error    # error as displayed by tool
 
     def __str__(self):
-        s  = "{fn} ({l}:{c}): {te}"
         l  = self.get_line_number()
         c  = self.get_column()
         te = self.get_error()
         fn = self.get_file_name()
 
-        return s.format(fn=fn, l=l, c=c, te=te)
+        if l != 0:
+            return "{fn} ({l}:{c}): {te}".format(fn=fn, l=l, c=c, te=te)
+        else:
+            return "{fn}: {te}".format(fn=fn, te=te)
 
     def __repr__(self):
         return str(self)
