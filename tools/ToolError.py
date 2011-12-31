@@ -14,3 +14,7 @@ def cppcheck_error(id, line, column, file_name, tool_error):
 def splint_error(id, line, column, file_name, tool_error):
     eid = get_EID("splint", id, tool_error)
     return Error(eid, line, column, file_name, tool_error)
+
+def valgrind_error(id, file_name, tool_error):
+    eid = get_EID("valgrind", id, tool_error)
+    return Error(eid, 0, 0, file_name, tool_error)
